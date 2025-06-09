@@ -3,9 +3,7 @@ const bodyparser=require('body-parser');
 
 const { PORT }=require('./config/serverConfig');
 const apiRoutes=require('./routes/index');
-//const userRepository=require('./repository/user-repository');
-// const {User} = require('./models/index')
-// const bcrypt = require('bcrypt');
+//const UserService=require('./services/user-service');
 const app = express();
 
 const prepareAndStartServer =()=>{
@@ -17,13 +15,13 @@ const prepareAndStartServer =()=>{
 
     app.listen(PORT,async ()=>{
         console.log(`server started on port:${PORT}`);
-        // const incomingpassword='123456';
-        // const user = await User.findByPk(3);
-        // const response = bcrypt.compareSync(incomingpassword, user.password);
+        //const service=new UserService;
+        // const newToken=service.createToken({email:'manas@admin.com',id:1})
+        // console.log("new created token is",newToken);
+
+        // const token= 'dummy jwt for testing'
+        // const response =service.verifyToken(token);
         // console.log(response);
-        //  const Repo=new userRepository();
-        //  const response=await Repo.getbyId(2);
-        //  console.log(response);
 
     });
 
