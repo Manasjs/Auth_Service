@@ -1,7 +1,7 @@
 const UserRepository = require('../repository/user-repository');
 const { JWT_KEY }=require('../config/serverConfig');
 const jwt = require('jsonwebtoken');
-const bcrypt = rquire('bcrypt');
+const bcrypt = require('bcrypt');
 
 
 class UserService {
@@ -16,6 +16,25 @@ async create(data){
     } catch (error) {
         console.log("somthing went wrong in service layer");
         throw error;
+    }
+}
+
+async signIn(email,plainPassword){
+    try {
+        //step1->fetch the user using email
+        const user = await this.userRepository.getByEmail(email);
+        //step2->compare incoming plain password with stores encrypted password
+        const passwordMatch=this.checkPassword( plainPassword, user.password )
+       //if password matches then create a token and send it to the user 
+       if(!passwordMatch){
+        console.log("password doesn't match");
+        throw {error:"incorrect password"};
+       }
+       const newJWT = this.createToken({ id: user.id, email: user.email });
+        return newJWT;
+    } catch (error) {
+       console.log("somthing went wrong in the sign in process");
+       throw error; 
     }
 }
 
