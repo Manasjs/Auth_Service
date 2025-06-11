@@ -38,6 +38,23 @@ async signIn(email,plainPassword){
     }
 }
 
+async isAuthenticated(token){
+    try {
+        const response=this.verifyToken(token);
+        if(!response){
+            throw {error:'invalid token'}
+        }
+        const user=this.userRepository.getbyId(response.id);
+        if(!user){
+            throw {error:'no user with this corresponding token exists'}
+        }
+        return user.id;
+    } catch (error) {
+       console.log("somthing went wrong in Auth process");
+       throw error;  
+    }
+}
+
 async destroy(userId){
     try {
         await this.userRepository.destroy(userId)
@@ -79,4 +96,6 @@ checkPassword(userInputPlainPassword,encryptedPassword){
 }
    
 }
+
+
 module.exports=UserService;
