@@ -94,6 +94,15 @@ checkPassword(userInputPlainPassword,encryptedPassword){
        throw error;
     }
 }
+
+isAdmin(userId){
+    try {
+        return this.userRepository.isAdmin(userId)
+    } catch (error) {
+         console.log("somthing went wrong in comparison password") ;
+       throw error;
+    }
+}
    
 }
 
